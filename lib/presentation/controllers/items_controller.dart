@@ -8,10 +8,12 @@ class ItemsController extends ChangeNotifier {
   List<SecurityItem> _items = [];
   bool _isLoading = false;
   ItemStatus? _currentFilter;
+  String? _errorMessage;
 
   List<SecurityItem> get items => _items;
   bool get isLoading => _isLoading;
   ItemStatus? get currentFilter => _currentFilter;
+  String? get errorMessage => _errorMessage;
 
   ItemsController(this._repository) {
     loadItems();
@@ -19,16 +21,21 @@ class ItemsController extends ChangeNotifier {
 
   Future<void> loadItems() async {
     _isLoading = true;
+    _errorMessage = null;
     notifyListeners();
 
     try {
       _items = await _repository.getItems();
     } catch (e) {
-      debugPrint("Error loading items: $e");
+      _errorMessage = "Error al cargar los datos: $e";
     } finally {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  void clearError() {
+    _errorMessage = null;
   }
 
   Future<void> createItem(String title, String description) async {

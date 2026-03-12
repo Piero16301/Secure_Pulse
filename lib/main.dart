@@ -5,7 +5,7 @@ import 'presentation/screens/home_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  const currentEnv = Environment.dev;
+  const currentEnv = Environment.local;
 
   final repository = RepoFactory.createItemsRepository(currentEnv);
   final controller = ItemsController(repository);

@@ -46,6 +46,19 @@ class HomeScreen extends StatelessWidget {
       body: ListenableBuilder(
         listenable: controller,
         builder: (context, _) {
+          if (controller.errorMessage != null) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  content: Text(controller.errorMessage!),
+                  backgroundColor: Colors.red,
+                ),
+              );
+              controller.clearError();
+            });
+          }
+
           if (controller.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
