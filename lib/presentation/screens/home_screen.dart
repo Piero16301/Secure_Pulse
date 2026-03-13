@@ -12,6 +12,10 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('SecurePulse'),
+        leading: IconButton(
+          icon: const Icon(Icons.security),
+          onPressed: () => Navigator.pushNamed(context, '/security'),
+        ),
         actions: [
           ListenableBuilder(
             listenable: controller,
@@ -103,10 +107,12 @@ class HomeScreen extends StatelessWidget {
         spacing: 16,
         children: [
           FloatingActionButton(
+            heroTag: 'refresh_items',
             onPressed: () => controller.loadItems(),
             child: const Icon(Icons.refresh),
           ),
           FloatingActionButton(
+            heroTag: 'add_item',
             onPressed: () => _showCreateDialog(context),
             child: const Icon(Icons.add),
           ),

@@ -1,21 +1,9 @@
 {
-  "scan_date": "2026-03-13T01:09:05.103Z",
-  "apk_hash": "f7f7d712257b87c62c4b44b8d97745bf",
-  "status": "FAIL",
-  "score": 40,
+  "scan_date": "2026-03-13T06:57:58.558Z",
+  "apk_hash": "85f9bb2380b1ce1f0e1129ff6c938b62",
+  "status": "PASS",
+  "score": 64,
   "findings": [
-    {
-      "title": "Application signed with debug certificate",
-      "severity": "high"
-    },
-    {
-      "title": "Certificate algorithm vulnerable to hash collision",
-      "severity": "high"
-    },
-    {
-      "title": "App can be installed on a vulnerable unpatched Android version 7.0, [minSdk=24]",
-      "severity": "high"
-    },
     {
       "title": "Application Data can be Backed up [android:allowBackup] flag is missing.",
       "severity": "warning"

@@ -1,22 +1,37 @@
 import 'package:flutter/material.dart';
 import 'data/factories/repo_factory.dart';
 import 'presentation/controllers/items_controller.dart';
+import 'presentation/controllers/security_controller.dart';
 import 'presentation/screens/home_screen.dart';
+import 'presentation/screens/security_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   const currentEnv = Environment.local;
 
-  final repository = RepoFactory.createItemsRepository(currentEnv);
-  final controller = ItemsController(repository);
+  final itemsRepository = RepoFactory.createItemsRepository(currentEnv);
+  final itemsController = ItemsController(itemsRepository);
 
-  runApp(SecurePulseApp(controller: controller));
+  final securityRepository = RepoFactory.createSecurityRepository(currentEnv);
+  final securityController = SecurityController(securityRepository);
+
+  runApp(
+    SecurePulseApp(
+      itemsController: itemsController,
+      securityController: securityController,
+    ),
+  );
 }
 
 class SecurePulseApp extends StatelessWidget {
-  const SecurePulseApp({super.key, required this.controller});
+  const SecurePulseApp({
+    super.key,
+    required this.itemsController,
+    required this.securityController,
+  });
 
-  final ItemsController controller;
+  final ItemsController itemsController;
+  final SecurityController securityController;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +44,12 @@ class SecurePulseApp extends StatelessWidget {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         ),
       ),
-      home: HomeScreen(controller: controller),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomeScreen(controller: itemsController),
+        '/security': (context) =>
+            SecurityScreen(controller: securityController),
+      },
     );
   }
 }
