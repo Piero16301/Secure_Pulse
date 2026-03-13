@@ -1,0 +1,48 @@
+{
+  "scan_date": "2026-03-13T01:09:05.103Z",
+  "apk_hash": "f7f7d712257b87c62c4b44b8d97745bf",
+  "status": "FAIL",
+  "score": 40,
+  "findings": [
+    {
+      "title": "Application signed with debug certificate",
+      "severity": "high"
+    },
+    {
+      "title": "Certificate algorithm vulnerable to hash collision",
+      "severity": "high"
+    },
+    {
+      "title": "App can be installed on a vulnerable unpatched Android version 7.0, [minSdk=24]",
+      "severity": "high"
+    },
+    {
+      "title": "Application Data can be Backed up [android:allowBackup] flag is missing.",
+      "severity": "warning"
+    },
+    {
+      "title": "Broadcast Receiver (androidx.profileinstaller.ProfileInstallReceiver) is Protected by a permission, but the protection level of the permission should be checked. Permission: android.permission.DUMP [android:exported=true]",
+      "severity": "warning"
+    },
+    {
+      "title": "The App uses an insecure Random Number Generator.",
+      "severity": "warning"
+    },
+    {
+      "title": "App uses SQLite Database and execute raw SQL query. Untrusted user input in raw SQL queries can cause SQL Injection. Also sensitive information should be encrypted and written to the database.",
+      "severity": "warning"
+    },
+    {
+      "title": "The App logs information. Sensitive information should never be logged.",
+      "severity": "info"
+    },
+    {
+      "title": "This App copies data to clipboard. Sensitive data should not be copied to clipboard as other applications can access it.",
+      "severity": "info"
+    },
+    {
+      "title": "This application has no privacy trackers",
+      "severity": "secure"
+    }
+  ]
+}
