@@ -7,8 +7,7 @@ import 'package:integration_test/integration_test.dart';
 
 import './step/la_aplicacion_esta_iniciada.dart';
 import './step/toco_el_icono_de_seguridad.dart';
-import './step/veo_el_texto.dart';
-import './step/veo_el_banner_rojo_de_error.dart';
+import './step/veo_el_icono_de_error.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -18,8 +17,7 @@ void main() {
         (tester) async {
       await laAplicacionEstaIniciada(tester);
       await tocoElIconoDeSeguridad(tester);
-      await veoElTexto(tester, 'ESTADO: FAIL');
-      await veoElBannerRojoDeError(tester);
+      await veoElIconoDeError(tester);
     });
   });
 }

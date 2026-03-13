@@ -43,6 +43,7 @@ class SecurePulseApp extends StatelessWidget {
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         ),
+        dividerColor: Colors.transparent,
       ),
       initialRoute: '/',
       routes: {

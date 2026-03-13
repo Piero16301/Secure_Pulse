@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 
 MOBSF_URL = "http://localhost:8000"
-API_KEY = "aafc55df4c8eae1f0fa5c10faf5fb7a8717e1a86a9c49248a20f927fe0dd3ee9"
+API_KEY = "160b9cd40a2b0cf7f578962ff64bf83fbc62270ee5a43cff67894cbc1bb2c4a3"
 APK_PATH = "build/app/outputs/flutter-apk/app-release.apk"
 OUTPUT_JSON = "assets/security_summary.json"
 
@@ -44,21 +44,25 @@ def run_pipeline():
     for issue in security_analysis.get('high', []):
         security_findings.append({
             "title": issue.get('title', 'Problema de Seguridad'),
+            "description": issue.get('description', ''),
             "severity": "high"
         })
     for issue in security_analysis.get('warning', []):
         security_findings.append({
             "title": issue.get('title', 'Problema de Seguridad'),
+            "description": issue.get('description', ''),
             "severity": "warning"
         })
     for issue in security_analysis.get('info', []):
         security_findings.append({
             "title": issue.get('title', 'Problema de Seguridad'),
+            "description": issue.get('description', ''),
             "severity": "info"
         })
     for issue in security_analysis.get('secure', []):
         security_findings.append({
             "title": issue.get('title', 'Problema de Seguridad'),
+            "description": issue.get('description', ''),
             "severity": "secure"
         })
 
@@ -74,13 +78,25 @@ def run_pipeline():
         "findings": security_findings
     }
 
+    OUTPUT_JSON = "assets/security_history.json"
+
+    history = []
+    if os.path.exists(OUTPUT_JSON):
+        try:
+            with open(OUTPUT_JSON, 'r') as f:
+                history = json.load(f)
+        except Exception:
+            history = []
+
+    history.insert(0, summary)
+
     # 5. Guardar en la carpeta assets/ de la app Flutter
     os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
     with open(OUTPUT_JSON, 'w') as f:
-        json.dump(summary, f, indent=2)
+        json.dump(history, f, indent=2)
 
-    print(f"✅ ¡Pipeline completado! Resumen guardado en {OUTPUT_JSON}")
-    print(f"📊 Estado Final: {final_status} (Score: {security_score}/100)")
+    print(f"✅ ¡Historial actualizado con los últimos {len(history)} escaneos en {OUTPUT_JSON}!")
+    print(f"📊 Estado Final Último Escaneo: {final_status} (Score: {security_score}/100)")
 
 if __name__ == "__main__":
     run_pipeline()

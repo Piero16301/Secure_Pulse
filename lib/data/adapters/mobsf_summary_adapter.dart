@@ -8,6 +8,7 @@ class MobSfSummaryAdapter {
         .map(
           (f) => SecurityFinding(
             title: f['title'] ?? 'Hallazgo desconocido',
+            description: f['description'] ?? '',
             severity: f['severity'] ?? 'info',
           ),
         )
@@ -20,5 +21,11 @@ class MobSfSummaryAdapter {
       score: json['score'] ?? 0,
       findings: findings,
     );
+  }
+
+  static List<SecuritySummary> fromJsonList(List<dynamic> jsonList) {
+    return jsonList
+        .map((json) => fromJson(json as Map<String, dynamic>))
+        .toList();
   }
 }

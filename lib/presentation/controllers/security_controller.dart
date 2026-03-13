@@ -4,28 +4,28 @@ import '../../domain/repositories/security_repository.dart';
 
 class SecurityController extends ChangeNotifier {
   SecurityController(this._repository) {
-    loadSummary();
+    loadHistory();
   }
 
   final SecurityRepository _repository;
 
-  SecuritySummary? _summary;
+  List<SecuritySummary> _history = [];
   bool _isLoading = false;
   String? _errorMessage;
 
-  SecuritySummary? get summary => _summary;
+  List<SecuritySummary> get history => _history;
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
 
-  Future<void> loadSummary() async {
+  Future<void> loadHistory() async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
 
     try {
-      _summary = await _repository.getLastScan();
+      _history = await _repository.getScanHistory();
     } catch (e) {
-      _errorMessage = "Error al cargar el reporte de MobSF: $e";
+      _errorMessage = "Error al cargar el historial: $e";
     } finally {
       _isLoading = false;
       notifyListeners();

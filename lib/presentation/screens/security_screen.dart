@@ -26,11 +26,14 @@ class SecurityScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Último Escaneo MobSF'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
+        title: const Text('Historial de Seguridad'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () => controller.loadHistory(),
+            tooltip: 'Refrescar historial',
+          ),
+        ],
       ),
       body: ListenableBuilder(
         listenable: controller,
@@ -43,152 +46,77 @@ class SecurityScreen extends StatelessWidget {
             return Center(child: Text(controller.errorMessage!));
           }
 
-          final summary = controller.summary;
-          if (summary == null) {
-            return const Center(child: Text('No hay datos de escaneo'));
+          if (controller.history.isEmpty) {
+            return const Center(child: Text('No hay historial disponible.'));
           }
 
-          final isFail = summary.status == 'FAIL';
+          return ListView.builder(
+            itemCount: controller.history.length,
+            itemBuilder: (context, index) {
+              final summary = controller.history[index];
+              final isFail = summary.status == 'FAIL';
 
-          return Column(
-            children: [
-              if (isFail)
-                Container(
-                  key: const Key('fail_banner'),
-                  width: double.infinity,
-                  color: Colors.red.shade100,
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
+              return Card(
+                margin: const EdgeInsets.all(8.0),
+                child: ExpansionTile(
+                  title: Row(
                     children: [
-                      const Icon(
-                        Icons.warning_amber_rounded,
-                        color: Colors.red,
+                      Icon(
+                        isFail ? Icons.error : Icons.check_circle,
+                        color: isFail ? Colors.red : Colors.green,
                       ),
                       const SizedBox(width: 8),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'ESTADO: ${summary.status}',
-                            style: const TextStyle(
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                          Text(
-                            'Score: ${summary.score}',
-                            style: const TextStyle(
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        'Escaneo: '
+                        '${DateFormat('dd/MM/yyyy hh:mm:ss aa').format(summary.scanDate.toLocal())}',
                       ),
                     ],
                   ),
-                ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                          text: 'Hash: ',
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: summary.apkHash,
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      RichText(
-                        text: TextSpan(
-                          text: 'Fecha: ',
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          children: [
-                            TextSpan(
-                              text: DateFormat(
-                                'dd/MM/yyyy HH:mm:ss',
-                              ).format(summary.scanDate.toLocal()),
-                              style: const TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      const Center(
-                        child: Text(
-                          'Hallazgos Principales',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                    ],
+                  subtitle: Text(
+                    'Score: ${summary.score} | Hash: ${summary.apkHash}',
                   ),
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: summary.findings.length,
-                  itemBuilder: (context, index) {
-                    final finding = summary.findings[index];
-                    return ListTile(
-                      title: Text(
-                        finding.title,
-                        style: const TextStyle(fontSize: 14),
-                      ),
-                      trailing: Container(
-                        width: 100,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: _getSeverityColor(
-                            finding.severity,
-                          ).withValues(alpha: 0.1),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: _getSeverityColor(finding.severity),
+                  children: summary.findings
+                      .map(
+                        (finding) => ListTile(
+                          title: Text(
+                            finding.title,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blueGrey,
+                            ),
+                          ),
+                          trailing: Tooltip(
+                            message: finding.description,
+                            margin: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 100,
+                              decoration: BoxDecoration(
+                                color: _getSeverityColor(
+                                  finding.severity,
+                                ).withValues(alpha: 0.2),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              child: Text(
+                                finding.severity.toUpperCase(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                        child: Text(
-                          finding.severity.toUpperCase(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: _getSeverityColor(finding.severity),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+                      )
+                      .toList(),
                 ),
-              ),
-            ],
+              );
+            },
           );
         },
       ),

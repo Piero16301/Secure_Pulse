@@ -6,11 +6,12 @@ import '../adapters/mobsf_summary_adapter.dart';
 
 class LocalSecurityRepository implements SecurityRepository {
   @override
-  Future<SecuritySummary> getLastScan() async {
+  Future<List<SecuritySummary>> getScanHistory() async {
     final String response = await rootBundle.loadString(
-      'assets/security_summary.json',
+      'assets/security_history.json',
     );
-    final Map<String, dynamic> data = json.decode(response);
-    return MobSfSummaryAdapter.fromJson(data);
+    final List<dynamic> data = json.decode(response);
+
+    return MobSfSummaryAdapter.fromJsonList(data);
   }
 }

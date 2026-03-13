@@ -1,0 +1,93 @@
+[
+  {
+    "scan_date": "2026-03-13T18:20:26.035Z",
+    "apk_hash": "7d3cf510ee4cd9a60d509692fbd6e0bf",
+    "status": "PASS",
+    "score": 64,
+    "findings": [
+      {
+        "title": "Application Data can be Backed up [android:allowBackup] flag is missing.",
+        "description": "The flag [android:allowBackup] should be set to false. By default it is set to true and allows anyone to backup your application data via adb. It allows users who have enabled USB debugging to copy application data off of the device.",
+        "severity": "warning"
+      },
+      {
+        "title": "Broadcast Receiver (androidx.profileinstaller.ProfileInstallReceiver) is Protected by a permission, but the protection level of the permission should be checked. Permission: android.permission.DUMP [android:exported=true]",
+        "description": "A Broadcast Receiver is found to be shared with other apps on the device therefore leaving it accessible to any other application on the device. It is protected by a permission which is not defined in the analysed application. As a result, the protection level of the permission should be checked where it is defined. If it is set to normal or dangerous, a malicious application can request and obtain the permission and interact with the component. If it is set to signature, only applications signed with the same certificate can obtain the permission.",
+        "severity": "warning"
+      },
+      {
+        "title": "The App uses an insecure Random Number Generator.",
+        "description": "The App uses an insecure Random Number Generator.\nhttps://github.com/MobSF/owasp-mstg/blob/master/Document/0x04g-Testing-Cryptography.md#weak-random-number-generators\n\nFiles:\nf0/a.java, line(s) 3\nf0/b.java, line(s) 3\nf0/c.java, line(s) 4\ng0/a.java, line(s) 4\nm/h.java, line(s) 7",
+        "severity": "warning"
+      },
+      {
+        "title": "App uses SQLite Database and execute raw SQL query. Untrusted user input in raw SQL queries can cause SQL Injection. Also sensitive information should be encrypted and written to the database.",
+        "description": "App uses SQLite Database and execute raw SQL query. Untrusted user input in raw SQL queries can cause SQL Injection. Also sensitive information should be encrypted and written to the database.\nhttps://github.com/MobSF/owasp-mstg/blob/master/Document/0x04h-Testing-Code-Quality.md#injection-flaws-mstg-arch-2-and-mstg-platform-2\n\nFiles:\nB/g.java, line(s) 9,10,11,12,13,14,294",
+        "severity": "warning"
+      },
+      {
+        "title": "The App logs information. Sensitive information should never be logged.",
+        "description": "The App logs information. Sensitive information should never be logged.\nhttps://github.com/MobSF/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md#logs\n\nFiles:\nA/a.java, line(s) 267,278,310,339,379\nA/b.java, line(s) 155,207,204\nB/g.java, line(s) 124,133,144,175,268,289,377\nB/k.java, line(s) 292,323,338,673,750\nB/p.java, line(s) 67,181,295,420,534\nB/s.java, line(s) 38,42\nB/t.java, line(s) 53,63,247,307,323,360,373,379,401,406,446,57\nD/b.java, line(s) 148\nE/AbstractActivityC0003d.java, line(s) 177,231,438,651,716,790,925,155,161,171,204,627,688,709,920\nE/B.java, line(s) 54\nE/C0002c.java, line(s) 27,41,55,69\nE/C0007h.java, line(s) 153,86\nE/C0009j.java, line(s) 59,66\nE/C0011l.java, line(s) 59,68,85\nE/C0013n.java, line(s) 51,60,81\nE/u.java, line(s) 197,248,468\nF/e.java, line(s) 119,50\nG/b.java, line(s) 54\nG/i.java, line(s) 121\nJ/e.java, line(s) 57,60,158,89\nN/k.java, line(s) 29\nO/a.java, line(s) 33,51\na/AbstractC0015a.java, line(s) 88,96,97,126,133,139,232,409\nio/flutter/embedding/engine/FlutterJNI.java, line(s) 135,144,163,225,627,630,643,1006,1208,556,565,702,714,742,796,1174\nio/flutter/embedding/engine/renderer/FlutterRenderer$ImageTextureRegistryEntry.java, line(s) 93\nio/flutter/embedding/engine/renderer/e.java, line(s) 38\nio/flutter/plugin/editing/f.java, line(s) 59,72,87,129,193,64\nio/flutter/plugin/editing/l.java, line(s) 163\nio/flutter/plugin/platform/c.java, line(s) 77,229,40,46,90,115,167,178,184,227,303,309,255,260,274,286,289\nio/flutter/plugin/platform/r.java, line(s) 35,76,86,97\nio/flutter/plugins/GeneratedPluginRegistrant.java, line(s) 15\nio/flutter/view/AccessibilityViewEmbedder.java, line(s) 52,54,203,205\nio/flutter/view/l.java, line(s) 33,39,48,63,65\nk/h.java, line(s) 77,93,69\nl/b.java, line(s) 138\nl/c.java, line(s) 216,225,269,333,344,356,339\nl/g.java, line(s) 300,306,373,463,496,515,522,726,915,982,1002,1016,1050,1068,1127,1166,1169,1213,1235,1254,1266,1297,1311,1320,1328,1381,1387,1399,1416,1421,1428,1509,1522,1526,1538,1548,1559,1566,1661,70,233,341,346,890,1482,1486,1490,1596,1604\nm/g.java, line(s) 839,848\nr/f.java, line(s) 96\nu/n.java, line(s) 50,53,56,59,94,97,100,103,141,143,145,147,149,151\nx/j.java, line(s) 164",
+        "severity": "info"
+      },
+      {
+        "title": "This App copies data to clipboard. Sensitive data should not be copied to clipboard as other applications can access it.",
+        "description": "This App copies data to clipboard. Sensitive data should not be copied to clipboard as other applications can access it.\nhttps://github.com/MobSF/owasp-mstg/blob/master/Document/0x04b-Mobile-App-Security-Testing.md#clipboard\n\nFiles:\nB/k.java, line(s) 10,1316\nio/flutter/plugin/editing/c.java, line(s) 5,560,568",
+        "severity": "info"
+      },
+      {
+        "title": "This application has no privacy trackers",
+        "description": "This application does not include any user or device trackers. Unable to find trackers during static analysis.",
+        "severity": "secure"
+      }
+    ]
+  },
+  {
+    "scan_date": "2026-03-13T18:12:04.939Z",
+    "apk_hash": "11b8afdf9b9f275f78de585975db3dd1",
+    "status": "FAIL",
+    "score": 53,
+    "findings": [
+      {
+        "title": "App can be installed on a vulnerable unpatched Android version 7.0, [minSdk=24]",
+        "description": "This application can be installed on an older version of android that has multiple unfixed vulnerabilities. These devices won't receive reasonable security updates from Google. Support an Android version => 10, API 29 to receive reasonable security updates.",
+        "severity": "high"
+      },
+      {
+        "title": "Application Data can be Backed up [android:allowBackup] flag is missing.",
+        "description": "The flag [android:allowBackup] should be set to false. By default it is set to true and allows anyone to backup your application data via adb. It allows users who have enabled USB debugging to copy application data off of the device.",
+        "severity": "warning"
+      },
+      {
+        "title": "Broadcast Receiver (androidx.profileinstaller.ProfileInstallReceiver) is Protected by a permission, but the protection level of the permission should be checked. Permission: android.permission.DUMP [android:exported=true]",
+        "description": "A Broadcast Receiver is found to be shared with other apps on the device therefore leaving it accessible to any other application on the device. It is protected by a permission which is not defined in the analysed application. As a result, the protection level of the permission should be checked where it is defined. If it is set to normal or dangerous, a malicious application can request and obtain the permission and interact with the component. If it is set to signature, only applications signed with the same certificate can obtain the permission.",
+        "severity": "warning"
+      },
+      {
+        "title": "App uses SQLite Database and execute raw SQL query. Untrusted user input in raw SQL queries can cause SQL Injection. Also sensitive information should be encrypted and written to the database.",
+        "description": "App uses SQLite Database and execute raw SQL query. Untrusted user input in raw SQL queries can cause SQL Injection. Also sensitive information should be encrypted and written to the database.\nhttps://github.com/MobSF/owasp-mstg/blob/master/Document/0x04h-Testing-Code-Quality.md#injection-flaws-mstg-arch-2-and-mstg-platform-2\n\nFiles:\nD/g.java, line(s) 9,10,11,12,13,14,331",
+        "severity": "warning"
+      },
+      {
+        "title": "The App uses an insecure Random Number Generator.",
+        "description": "The App uses an insecure Random Number Generator.\nhttps://github.com/MobSF/owasp-mstg/blob/master/Document/0x04g-Testing-Cryptography.md#weak-random-number-generators\n\nFiles:\nh0/a.java, line(s) 3\nh0/b.java, line(s) 3\nh0/c.java, line(s) 4\ni0/a.java, line(s) 4\no/h.java, line(s) 8",
+        "severity": "warning"
+      },
+      {
+        "title": "The App logs information. Sensitive information should never be logged.",
+        "description": "The App logs information. Sensitive information should never be logged.\nhttps://github.com/MobSF/owasp-mstg/blob/master/Document/0x05d-Testing-Data-Storage.md#logs\n\nFiles:\nC/a.java, line(s) 308,342,416,435,446\nC/b.java, line(s) 146,195,198\nD/g.java, line(s) 151,160,171,202,300,322,427\nD/k.java, line(s) 678,1210,1241,1256,1398\nD/p.java, line(s) 75,205,335,476,606\nD/s.java, line(s) 38,42\nD/t.java, line(s) 51,61,246,306,322,359,365,376,405,410,449,55\nF/b.java, line(s) 149\nG/AbstractActivityC0004e.java, line(s) 213,262,477,714,800,857,1017,180,184,216,229,727,765,803,1020\nG/C.java, line(s) 66\nG/C0003d.java, line(s) 27,41,55,69\nG/C0008i.java, line(s) 162,84\nG/C0011l.java, line(s) 60,65\nG/C0013n.java, line(s) 72,107,113\nG/C0015p.java, line(s) 51,76,82\nG/v.java, line(s) 196,242,502\nH/e.java, line(s) 138,50\nI/b.java, line(s) 59\nI/i.java, line(s) 157\nL/e.java, line(s) 55,58,155,85\nP/k.java, line(s) 26\nQ/a.java, line(s) 33,51\na/AbstractC0017a.java, line(s) 109,117,118,151,158,164,271,478,445\nio/flutter/embedding/engine/FlutterJNI.java, line(s) 144,153,172,232,712,715,726,1112,1322,640,649,794,806,832,893,1288\nio/flutter/embedding/engine/renderer/FlutterRenderer$ImageTextureRegistryEntry.java, line(s) 91\nio/flutter/embedding/engine/renderer/e.java, line(s) 38\nio/flutter/plugin/editing/g.java, line(s) 57,70,85,137,201,60\nio/flutter/plugin/editing/m.java, line(s) 169\nio/flutter/plugin/platform/c.java, line(s) 63,106,40,44,108,119,130,134,297,308,314,403,181,186,198,215,218\nio/flutter/plugin/platform/r.java, line(s) 35,76,86,97\nio/flutter/plugins/GeneratedPluginRegistrant.java, line(s) 15\nio/flutter/view/AccessibilityViewEmbedder.java, line(s) 56,58,66,71,74,177,179,192,263,265\nio/flutter/view/l.java, line(s) 44,50,59,66,79,105,107\nl/C0037e.java, line(s) 33,45,52,61\nl/i.java, line(s) 78,96,70\nn/b.java, line(s) 138\nn/c.java, line(s) 216,307,315,325,337,320\nn/g.java, line(s) 314,321,387,494,532,545,552,779,977,1046,1066,1080,1114,1131,1189,1234,1237,1284,1306,1325,1337,1368,1384,1393,1401,1452,1458,1470,1487,1492,1499,1570,1583,1587,1607,1639,1645,1651,1734,70,244,354,366,970,1551,1597,1600,1671,1680\no/g.java, line(s) 880,889\nt/f.java, line(s) 91\nw/n.java, line(s) 53,56,59,62,138,141,144,147,189,191,193,195,197,199\nz/j.java, line(s) 185",
+        "severity": "info"
+      },
+      {
+        "title": "This App copies data to clipboard. Sensitive data should not be copied to clipboard as other applications can access it.",
+        "description": "This App copies data to clipboard. Sensitive data should not be copied to clipboard as other applications can access it.\nhttps://github.com/MobSF/owasp-mstg/blob/master/Document/0x04b-Mobile-App-Security-Testing.md#clipboard\n\nFiles:\nD/k.java, line(s) 11,345\nio/flutter/plugin/editing/d.java, line(s) 6,577,585",
+        "severity": "info"
+      },
+      {
+        "title": "This application has no privacy trackers",
+        "description": "This application does not include any user or device trackers. Unable to find trackers during static analysis.",
+        "severity": "secure"
+      }
+    ]
+  }
+]
