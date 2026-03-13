@@ -83,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 subtitle: Text(
-                  'Prioridad ${item.severity} - ${item.description}',
+                  '${item.description} - Prioridad ${item.severity}',
                 ),
                 leading: Checkbox(
                   value: isResolved,
@@ -98,9 +98,19 @@ class HomeScreen extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _showCreateDialog(context),
-        child: const Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        spacing: 16,
+        children: [
+          FloatingActionButton(
+            onPressed: () => controller.loadItems(),
+            child: const Icon(Icons.refresh),
+          ),
+          FloatingActionButton(
+            onPressed: () => _showCreateDialog(context),
+            child: const Icon(Icons.add),
+          ),
+        ],
       ),
     );
   }

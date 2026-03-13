@@ -3,9 +3,9 @@ import '../../domain/entities/security_item.dart';
 import '../../domain/repositories/items_repository.dart';
 
 class LoggingItemsRepositoryDecorator implements ItemsRepository {
-  final ItemsRepository _innerRepository;
-
   LoggingItemsRepositoryDecorator(this._innerRepository);
+
+  final ItemsRepository _innerRepository;
 
   @override
   Future<List<SecurityItem>> getItems() async {
